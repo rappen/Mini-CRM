@@ -206,27 +206,46 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyPlugin.cs" />
-    <Compile Include="MyPluginControl.cs">
+    <Compile Include="MiniCRM.cs" />
+    <Compile Include="MiniCRMControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MyPluginControl.designer.cs">
-      <DependentUpon>MyPluginControl.cs</DependentUpon>
+    <Compile Include="MiniCRMControl.designer.cs">
+      <DependentUpon>MiniCRMControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MiniCRMControl.resx">
+      <DependentUpon>MiniCRMControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mini CRM.png" />
+  </ItemGroup>
+  <Import Project="..\Rappen.XTB.Helper\Rappen.XTB.Helpers\Rappen.XTB.Helpers.projitems" Label="Shared" />
+  <Import Project="..\Rappen.XTB.Helper\Rappen.XRM.Helpers\Rappen.XRM.Helpers.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>IF $(ConfigurationName) == Debug (
       IF NOT EXIST Plugins mkdir Plugins
       xcopy "$(TargetDir)$(TargetFileName)" "$(TargetDir)Plugins\" /Y
       xcopy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)Plugins\" /Y
-      )</PostBuildEvent>
+      del "$(TargetDir)Plugins\manifest.json"
+)</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Web.WebView2.1.0.1054.31\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.1054.31\build\Microsoft.Web.WebView2.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
